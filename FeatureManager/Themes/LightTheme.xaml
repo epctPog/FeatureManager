@@ -12,8 +12,21 @@
     <Color x:Key="Grey80">#FF404040</Color>
     <Color x:Key="Grey90">#FF202020</Color>
     <Color x:Key="Grey100">#FF000000</Color>
+
+    <Color x:Key="Green10">#FFEBF9EB</Color>   <!-- Sehr helles Grün -->
+    <Color x:Key="Green20">#FF88E588</Color>   <!-- Hellgrün -->
+    <Color x:Key="Green30">#FF42D342</Color>   <!-- Leuchtendes Grün -->
+    <Color x:Key="Green40">#FF00C600</Color>   <!-- Sattes Grün -->
+    <Color x:Key="Green50">#FF00AA00</Color>   <!-- Dunkleres Grün -->
+    <Color x:Key="Green60">#FF008E00</Color>   <!-- Waldgrün -->
+    <Color x:Key="Green70">#FF007A00</Color>   <!-- Tiefes Grün -->
+    <Color x:Key="Green80">#FF006000</Color>   <!-- Dunkelgrün -->
+    <Color x:Key="Green90">#FF004D00</Color>   <!-- Sehr dunkles Grün -->
+    <Color x:Key="Green100">#FF003B00</Color>  <!-- Fast Schwarzgrün -->
+
     <SolidColorBrush x:Key="BackgroundBrush" Color="{StaticResource Grey0}"/>
     <SolidColorBrush x:Key="GroundBrush" Color="{StaticResource Grey80}"/>
     <SolidColorBrush x:Key="ForegroundBrush" Color="{StaticResource Grey90}"/>
-    <SolidColorBrush x:Key="AccentBrush" Color="#FF007ACC"/>
+    <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource Green30}"/>
+    <SolidColorBrush x:Key="SuperColorBrush" Color="{StaticResource Green60}"/>
 </ResourceDictionary>

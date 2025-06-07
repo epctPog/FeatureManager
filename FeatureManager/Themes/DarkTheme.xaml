@@ -12,9 +12,31 @@
     <Color x:Key="Grey80">#FFB8B8B8</Color>
     <Color x:Key="Grey90">#FFD0D0D0</Color>
     <Color x:Key="Grey100">#FFFFFFFF</Color>
+	
+	<Color x:Key="Yellow10">#FFFFFBEB</Color>
+	<!-- Sehr helles Gelb -->
+	<Color x:Key="Yellow20">#FFFCE588</Color>
+	<!-- Hellgelb -->
+	<Color x:Key="Yellow30">#FFF9D342</Color>
+	<!-- Leuchtendes Gelb -->
+	<Color x:Key="Yellow40">#FFF7C600</Color>
+	<!-- Sattes Goldgelb -->
+	<Color x:Key="Yellow50">#FFCDAA00</Color>
+	<!-- Dunkleres Gelb/Gold -->
+	<Color x:Key="Yellow60">#FFB38E00</Color>
+	<!-- Bernstein-Ton -->
+	<Color x:Key="Yellow70">#FF997A00</Color>
+	<!-- Warmes Honiggelb -->
+	<Color x:Key="Yellow80">#FF7F6000</Color>
+	<!-- Braun-gelb -->
+	<Color x:Key="Yellow90">#FF664D00</Color>
+	<!-- Dunkles Goldbraun -->
+	<Color x:Key="Yellow100">#FF4D3B00</Color>
+	<!-- Sehr dunkel, fast Ocker -->
 
     <SolidColorBrush x:Key="BackgroundBrush" Color="{StaticResource Grey10}"/>
     <SolidColorBrush x:Key="GroundBrush" Color="{StaticResource Grey80}"/>
     <SolidColorBrush x:Key="ForegroundBrush" Color="{StaticResource Grey50}"/>
-    <SolidColorBrush x:Key="AccentBrush" Color="#FF569CD6"/>
+    <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource Yellow60}"/>
+	<SolidColorBrush x:Key="SuperColorBrush" Color="{StaticResource Yellow80}"/>
 </ResourceDictionary>
