@@ -1,0 +1,72 @@
+﻿<Window x:Class="FeatureManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:FeatureManager"
+        xmlns:vm="clr-namespace:FeatureManager.ViewModels"
+        Title="Feature Manager" Height="600" Width="900"
+        Background="{DynamicResource BackgroundBrush}"
+        Foreground="{DynamicResource ForegroundBrush}"
+        BorderBrush="Black"
+        PreviewMouseWheel="Window_PreviewMouseWheel">
+
+    <Window.InputBindings>
+        <KeyBinding Key="Z" Modifiers="Control" Command="{Binding UndoCommand}" />
+        <KeyBinding Key="Y" Modifiers="Control" Command="{Binding RedoCommand}" />
+    </Window.InputBindings>
+
+    <Window.DataContext>
+        <vm:MainViewModel x:Name="ViewModel"/>
+    </Window.DataContext>
+
+    <Grid Margin="5" Background="{DynamicResource BackgroundBrush}">
+        <Grid.LayoutTransform>
+            <ScaleTransform x:Name="MainScaleTransform" ScaleX="1" ScaleY="1"/>
+        </Grid.LayoutTransform>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="150"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Linke Seite: Ordnerwahl + Dateiliste -->
+        <StackPanel Grid.Column="0" Margin="2.5,2.5,2.5,2.5">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,0,10" >
+                <Button Content="💾 Speichern" Click="SaveButton_Click" Margin="0,0,2.5,0" Width="80"/>
+                <Button Content="↩ Undo" Command="{Binding UndoCommand}" Margin="0,0,2.5,0" Width="55"/>
+                <Button Content="↪ Redo" Command="{Binding RedoCommand}" Width="55"/>
+            </StackPanel>
+            <Button Content="📁 Ordner wählen" Click="SelectFolder_Click" Margin="0,0,0,5"/>
+            <ListBox x:Name="JsonListBox"
+                    ItemsSource="{Binding JsonFiles}"
+                    SelectionChanged="JsonFile_SelectionChanged"
+                    Margin="5,0,0,5"/>
+        </StackPanel>
+
+        <!-- Rechte Seite: Feature-Anzeige -->
+        <DataGrid x:Name="FeatureDataGrid"
+                  ItemsSource="{Binding Features}"
+                  AutoGenerateColumns="False"
+                  CanUserAddRows="False"
+                  IsReadOnly="False" Margin="2,2,2,2" Grid.Column="1"
+                  SelectionMode="Single"
+                  SelectionUnit="FullRow"
+                  Background="{DynamicResource BackgroundBrush}"
+                  Foreground="{DynamicResource ForegroundBrush}"
+                  BorderBrush="Black">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="Auto"/>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
+                <DataGridTextColumn Header="Beschreibung" Binding="{Binding Description}" Width="1.5*"/>
+                <DataGridTextColumn Header="Wichtigkeit" Binding="{Binding Priority}" Width="70"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Grid.Column="2" VerticalAlignment="Top" Margin="2.5,2.5,2.5,2.5">
+            <Button Content="🌙 Dark Mode an/aus" Click="ToggleTheme_Click" Margin="0,0,0,5"/>
+            <Button Content="➕ Neues Feature" Click="AddNewFeature_Click" Margin="0,0,0,5"/>
+            <Button Content="🗑️ Löschen" Click="DeleteFeature_Click" Margin="0,0,0,5"/>
+            <!-- Weitere Tools hier -->
+        </StackPanel>
+    </Grid>
+</Window>

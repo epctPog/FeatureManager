@@ -1,0 +1,152 @@
+[
+  {
+    "Id": 1,
+    "Name": "Input-System",
+    "Description": "Spielereingaben + Rebinding via Menü",
+    "Priority": 1
+  },
+  {
+    "Id": 2,
+    "Name": "Kamera-Base",
+    "Description": "First-Person-Kamera + Umschaltungssystem",
+    "Priority": 1
+  },
+  {
+    "Id": 3,
+    "Name": "Bewegungssystem",
+    "Description": "Laufen, Springen, Klettern, Fallen etc.",
+    "Priority": 1
+  },
+  {
+    "Id": 4,
+    "Name": "State Machine-Framework",
+    "Description": "Zustandslogik für Player, UI, AI",
+    "Priority": 1
+  },
+  {
+    "Id": 5,
+    "Name": "Dev-Konsole",
+    "Description": "Cheats, Variablen ändern zur Laufzeit",
+    "Priority": 1
+  },
+  {
+    "Id": 6,
+    "Name": "Interaktionssystem",
+    "Description": "„E drücken“, Trigger, Objekte anklickbar",
+    "Priority": 2
+  },
+  {
+    "Id": 7,
+    "Name": "Kameraeffekte",
+    "Description": "Lean, Headbob, Zoom, Wackeln",
+    "Priority": 3
+  },
+  {
+    "Id": 8,
+    "Name": "Audio-System",
+    "Description": "3D-Sound, Schritte, SFX, Musik",
+    "Priority": 3
+  },
+  {
+    "Id": 9,
+    "Name": "Debug-Overlay",
+    "Description": "FPS, Zustand, Trigger-Anzeige",
+    "Priority": 3
+  },
+  {
+    "Id": 10,
+    "Name": "Inventarsystem",
+    "Description": "Einfaches Inventar für Objekte, Items",
+    "Priority": 4
+  },
+  {
+    "Id": 11,
+    "Name": "Umgebungsphysik",
+    "Description": "Objekte schieben, zerstören, werfen",
+    "Priority": 4
+  },
+  {
+    "Id": 12,
+    "Name": "UI-HUD",
+    "Description": "Healthbar, Crosshair, Questziele",
+    "Priority": 4
+  },
+  {
+    "Id": 13,
+    "Name": "Kamera-Manager",
+    "Description": "Gameplay-, Dialog- und Cutscene-Kameras",
+    "Priority": 4
+  },
+  {
+    "Id": 14,
+    "Name": "Story-Triggersystem",
+    "Description": "Ereignisse, globale Zustände",
+    "Priority": 4
+  },
+  {
+    "Id": 15,
+    "Name": "Dialogsystem",
+    "Description": "Auswahlmöglichkeiten, Texte mit NPCs",
+    "Priority": 5
+  },
+  {
+    "Id": 16,
+    "Name": "Cutscene-System",
+    "Description": "Timeline-basierte Szenen",
+    "Priority": 5
+  },
+  {
+    "Id": 17,
+    "Name": "Speichern / Laden",
+    "Description": "Spielstand mit Weltzuständen",
+    "Priority": 5
+  },
+  {
+    "Id": 18,
+    "Name": "Quest-/Zielanzeige",
+    "Description": "kleine Ziele, eingeblendet im HUD",
+    "Priority": 5
+  },
+  {
+    "Id": 19,
+    "Name": "Umgebungseffekte",
+    "Description": "Reverb, Hall in Höhlen etc.",
+    "Priority": 6
+  },
+  {
+    "Id": 20,
+    "Name": "Bossverhalten-Logik",
+    "Description": "Erweiterte Zustände, Kampf-AI",
+    "Priority": 6
+  },
+  {
+    "Id": 21,
+    "Name": "Musiksteuerung",
+    "Description": "dynamische Musik je nach Situation",
+    "Priority": 7
+  },
+  {
+    "Id": 22,
+    "Name": "Inspect-Modus",
+    "Description": "Objekte drehen, untersuchen",
+    "Priority": 7
+  },
+  {
+    "Id": 23,
+    "Name": "Kamera-Übergänge",
+    "Description": "Smooth Blending zwischen Kameras",
+    "Priority": 7
+  },
+  {
+    "Id": 24,
+    "Name": "Kontext-Dialog-Hinweise",
+    "Description": "z. B. NPC sagt „pass auf!“ bei Gegnern",
+    "Priority": 9
+  },
+  {
+    "Id": 25,
+    "Name": "Kommentar-System",
+    "Description": "optionale NPC-Reaktionen auf Umgebung",
+    "Priority": 10
+  }
+]
