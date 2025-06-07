@@ -1,0 +1,20 @@
+[
+  {
+    "Id": 1,
+    "Name": "Login-System",
+    "Description": "Benutzer können sich anmelden und registrieren.",
+    "Priority": 1
+  },
+  {
+    "Id": 2,
+    "Name": "Dark Mode",
+    "Description": "Wechselt die App zu einem dunklen Farbschema.",
+    "Priority": 3
+  },
+  {
+    "Id": 3,
+    "Name": "Export Funktion",
+    "Description": "Exportiert die Feature-Liste als JSON-Datei.",
+    "Priority": 2
+  }
+]

@@ -13,11 +13,27 @@ namespace FeatureManager.ViewModels
     {
         public ObservableCollection<string> JsonFiles { get; set; } = new();
         public ObservableCollection<FeatureEntry> Features { get; set; } = new();
+        public ObservableCollection<FeatureEntry> AllFeatures { get; set; } = new();
         public string SelectedJsonFilePath { get; set; } = string.Empty;
         public UndoManager UndoManager { get; } = new();
 
         public DelegateCommand UndoCommand { get; }
         public DelegateCommand RedoCommand { get; }
+
+        private string _searchText = "";
+        public string SearchText
+        {
+            get => _searchText;
+            set
+            {
+                if (_searchText != value)
+                {
+                    _searchText = value;
+                    OnPropertyChanged();
+                    ApplyFilter();
+                }
+            }
+        }
 
         public MainViewModel()
         {
@@ -37,6 +53,7 @@ namespace FeatureManager.ViewModels
         public void LoadFeaturesFromFile(string folderPath, string fileName)
         {
             Features.Clear();
+            AllFeatures.Clear();
             string fullPath = Path.Combine(folderPath, fileName);
             if (!File.Exists(fullPath)) return;
 
@@ -47,6 +64,7 @@ namespace FeatureManager.ViewModels
             foreach (var entry in entries.OrderBy(e => e.Id))
             {
                 Features.Add(entry);
+                AllFeatures.Add(entry);
             }
 
             UndoManager.Clear();
@@ -111,6 +129,47 @@ namespace FeatureManager.ViewModels
         {
             UndoCommand.RaiseCanExecuteChanged();
             RedoCommand.RaiseCanExecuteChanged();
+        }
+        private void ApplyFilter()
+        {
+            var filtered = string.IsNullOrWhiteSpace(SearchText)
+                ? AllFeatures
+                : new ObservableCollection<FeatureEntry>(
+                    AllFeatures.Where(f =>
+                        (f.Name?.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                        (f.Description?.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                        f.Id.ToString().Contains(SearchText) ||
+                        f.Priority.ToString().Contains(SearchText)
+                    )
+                );
+
+            Features.Clear();
+            foreach (var f in filtered)
+                Features.Add(f);
+        }
+        public void ExportFeatures(string path)
+        {
+            var json = JsonConvert.SerializeObject(Features, Formatting.Indented);
+            File.WriteAllText(path, json);
+        }
+        public void ImportFeatures(string path)
+        {
+            if (!File.Exists(path))
+                return;
+
+            string json = File.ReadAllText(path);
+            var importedFeatures = JsonConvert.DeserializeObject<ObservableCollection<FeatureEntry>>(json);
+
+            if (importedFeatures == null)
+                return;
+
+            Features.Clear();
+            foreach (var f in importedFeatures)
+                Features.Add(f);
+            UndoManager.Clear();
+            UndoManager.SaveState(Features);
+
+            RaiseCommandStates();
         }
     }
 }

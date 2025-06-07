@@ -24,32 +24,51 @@
             <ScaleTransform x:Name="MainScaleTransform" ScaleX="1" ScaleY="1"/>
         </Grid.LayoutTransform>
 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="150"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Linke Seite: Ordnerwahl + Dateiliste -->
-        <StackPanel Grid.Column="0" Margin="2.5,2.5,2.5,2.5">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,0,10" >
+        <StackPanel Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Margin="2.5,2.5,2.5,2.5">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,0,5" Height="25">
                 <Button Content="💾 Speichern" Click="SaveButton_Click" Margin="0,0,2.5,0" Width="80"/>
                 <Button Content="↩ Undo" Command="{Binding UndoCommand}" Margin="0,0,2.5,0" Width="55"/>
                 <Button Content="↪ Redo" Command="{Binding RedoCommand}" Width="55"/>
             </StackPanel>
-            <Button Content="📁 Ordner wählen" Click="SelectFolder_Click" Margin="0,0,0,5"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,0,5" Height="25">
+                <Button Content="📄 Neu" Click="CreateNewFile_Click" Margin="0,0,2.5,0" Width="50"/>
+                <Button Content="⬇ Import" Click="ImportButton_Click" Margin="0,0,2.5,0" Width="70"/>
+                <Button Content="⬆ Export" Click="ExportButton_Click" Margin="0,0,2.5,0" Width="70"/>
+            </StackPanel>
+            <Button Content="📁 Ordner wählen" Click="SelectFolder_Click" Margin="0,0,0,5" Height="25"/>
             <ListBox x:Name="JsonListBox"
-                    ItemsSource="{Binding JsonFiles}"
-                    SelectionChanged="JsonFile_SelectionChanged"
-                    Margin="5,0,0,5"/>
+                 ItemsSource="{Binding JsonFiles}"
+                 SelectionChanged="JsonFile_SelectionChanged"
+                 Margin="5,0,0,5">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding ., Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             BorderThickness="0"
+                             Background="Transparent"
+                             IsReadOnly="True"
+                             GotFocus="TextBox_GotFocus"
+                             LostFocus="TextBox_LostFocus"
+                             MouseDoubleClick="TextBox_MouseDoubleClick"/>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+            </ListBox>
         </StackPanel>
 
-        <!-- Rechte Seite: Feature-Anzeige -->
         <DataGrid x:Name="FeatureDataGrid"
                   ItemsSource="{Binding Features}"
                   AutoGenerateColumns="False"
                   CanUserAddRows="False"
-                  IsReadOnly="False" Margin="2,2,2,2" Grid.Column="1"
+                  IsReadOnly="False" Margin="2,2,2,2" Grid.Column="1" Grid.Row="0"
                   SelectionMode="Single"
                   SelectionUnit="FullRow"
                   Background="{DynamicResource BackgroundBrush}"
@@ -62,11 +81,14 @@
                 <DataGridTextColumn Header="Wichtigkeit" Binding="{Binding Priority}" Width="70"/>
             </DataGrid.Columns>
         </DataGrid>
-        <StackPanel Grid.Column="2" VerticalAlignment="Top" Margin="2.5,2.5,2.5,2.5">
+        <TextBox Margin="2" Grid.Column="1" Grid.Row="1"
+                 HorizontalAlignment="Stretch"
+                 VerticalAlignment="Center"
+                 Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+        <StackPanel Grid.Column="2" Grid.Row="0" Grid.RowSpan="2" VerticalAlignment="Top" Margin="2.5,2.5,2.5,2.5">
             <Button Content="🌙 Dark Mode an/aus" Click="ToggleTheme_Click" Margin="0,0,0,5"/>
             <Button Content="➕ Neues Feature" Click="AddNewFeature_Click" Margin="0,0,0,5"/>
             <Button Content="🗑️ Löschen" Click="DeleteFeature_Click" Margin="0,0,0,5"/>
-            <!-- Weitere Tools hier -->
         </StackPanel>
     </Grid>
 </Window>
