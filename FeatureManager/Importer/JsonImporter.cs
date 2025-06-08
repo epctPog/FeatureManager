@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using Newtonsoft.Json;
-using System.Windows.Forms;
-using FeatureManager.Models;
-using FeatureManager.ViewModels;
+﻿using FeatureManager.Models;
 using System.Collections.ObjectModel;
 using System.IO;
 using Newtonsoft.Json.Linq;

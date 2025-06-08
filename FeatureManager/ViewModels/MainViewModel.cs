@@ -4,7 +4,6 @@ using Newtonsoft.Json;
 using FeatureManager.Models;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using FeatureManager.Classes.Config;
 using FeatureManager.Classes.Undo;
 using FeatureManager.Importer.ExcelImporter;
 using FeatureManager.Importer;

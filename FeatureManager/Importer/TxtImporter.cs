@@ -1,10 +1,6 @@
-﻿using System.Windows.Forms;
-using FeatureManager.Models;
-using FeatureManager.ViewModels;
-using Newtonsoft.Json;
+﻿using FeatureManager.Models;
 using System.Collections.ObjectModel;
 using System.IO;
-using FeatureManager.Importer;
 
 namespace FeatureManager.Importer.TxtImporter
 {

@@ -1,18 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using Newtonsoft.Json;
-using System.Windows.Forms;
-using FeatureManager.Models;
-using FeatureManager.ViewModels;
+﻿using FeatureManager.Models;
 using ClosedXML.Excel;
 using System.Collections.ObjectModel;
 
