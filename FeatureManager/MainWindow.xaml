@@ -34,7 +34,7 @@
             <ColumnDefinition Width="150"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Margin="2.5,2.5,2.5,2.5">
+        <StackPanel Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Margin="2,2,2,2">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,0,5" Height="25">
                 <Button Content="💾 Speichern" Click="SaveButton_Click" Margin="0,0,2.5,0" Width="80"/>
                 <Button Content="↩ Undo" Command="{Binding UndoCommand}" Margin="0,0,2.5,0" Width="55"/>
@@ -109,11 +109,14 @@
                  BorderBrush="{DynamicResource SuperColorBrush}"
                  BorderThickness="1"
                  Padding="4"/>
-        
-        <StackPanel Grid.Column="2" Grid.Row="0" Grid.RowSpan="2" VerticalAlignment="Top" Margin="2.5,2,2.5,2.5">
+
+        <StackPanel Grid.Column="2" VerticalAlignment="Top" Margin="2,2,2,2">
             <Button Content="🌙 Dark Mode an/aus" Click="ToggleTheme_Click" Margin="0,0,0,2.5" Height="25"/>
             <Button Content="➕ Neues Feature" Click="AddNewFeature_Click" Margin="0,0,0,2.5" Height="25"/>
-            <Button Content="🗑️ Löschen" Click="DeleteFeature_Click" Margin="0,0,0,2.5" Height="25"/>
+            <Button Content="🧬 json-Fusion" Click="ImportJsonButton_Click" Margin="0,0,0,2.5" Height="25"/>
+            <Button Content="📃 .txt-Import" Click="ImportTxtButton_Click" Margin="0,0,0,2.5" Height="25"/>
+            <Button Content="📊 .xlsx-Import" Click="ImportExcelButton_Click" Margin="0,0,0,2.5" Height="25"/>
+            <Button Content="🗑️ Löschen" Click="DeleteFeature_Click" Height="25"/>
         </StackPanel>
     </Grid>
 </Window>

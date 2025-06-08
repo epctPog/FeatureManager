@@ -9,6 +9,8 @@ using System.Collections.ObjectModel;
 using FeatureManager.ViewModels;
 using FeatureManager.Models;
 using FeatureManager.Classes.Config;
+using System.Windows.Forms.Design;
+using System.Windows.Forms;
 
 namespace FeatureManager
 {
@@ -20,7 +22,12 @@ namespace FeatureManager
         private const double MinZoom = 0.5;
         private const double MaxZoom = 3.0;
         private string? oldName;
-
+        public enum FileType
+        {
+            Txt,
+            Json,
+            Excel
+        }
         public MainWindow()
         {
             InitializeComponent();
@@ -201,6 +208,33 @@ namespace FeatureManager
             {
                 System.Windows.MessageBox.Show("Fehler beim Umbenennen der Datei:\n" + ex.Message, "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private void ImportTxtButton_Click(object sender, RoutedEventArgs e)
+        {
+            var dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.Filter = "Textdateien (*.txt)|*.txt";
+
+            if (dlg.ShowDialog() == true)
+                viewModel.ImportFeatures(dlg.FileName, ".txt");
+        }
+
+        private void ImportJsonButton_Click(object sender, RoutedEventArgs e)
+        {
+            var dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.Filter = "JSON Dateien (*.json)|*.json";
+
+            if (dlg.ShowDialog() == true)
+                viewModel.ImportFeatures(dlg.FileName, ".json");
+        }
+
+        private void ImportExcelButton_Click(object sender, RoutedEventArgs e)
+        {
+            var dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.Filter = "Excel Dateien (*.xlsx)|*.xlsx";
+
+            if (dlg.ShowDialog() == true)
+                viewModel.ImportFeatures(dlg.FileName, ".xlsx");
         }
     }
 }

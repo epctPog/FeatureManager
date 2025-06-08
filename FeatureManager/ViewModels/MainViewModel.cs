@@ -6,6 +6,10 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using FeatureManager.Classes.Config;
 using FeatureManager.Classes.Undo;
+using FeatureManager.Importer.ExcelImporter;
+using FeatureManager.Importer;
+using FeatureManager.Importer.JsonImporter;
+using FeatureManager.Importer.TxtImporter;
 
 namespace FeatureManager.ViewModels
 {
@@ -170,6 +174,35 @@ namespace FeatureManager.ViewModels
             UndoManager.SaveState(Features);
 
             RaiseCommandStates();
+        }
+        public void ImportFeatures(string filePath, string extension)
+        {
+            IFeatureImporter importer = extension.ToLower() switch
+            {
+                ".txt" => new TxtFeatureImporter(),
+                ".json" => new JsonFeatureImporter(),
+                ".xlsx" => new ExcelFeatureImporter(),
+                _ => null
+            };
+            if (importer != null)
+            {
+                var imported = importer.Import(filePath);
+                var existingIds = new HashSet<int>(Features.Select(f => f.Id));
+                var newIdMap = new Dictionary<int, int>();
+                foreach (var feature in imported)
+                {
+                    int originalId = feature.Id;
+                    int newId = originalId;
+                    while (existingIds.Contains(newId) || newIdMap.ContainsValue(newId))
+                    {
+                        newId++;
+                    }
+                    feature.Id = newId;
+                    newIdMap[originalId] = newId;
+                    Features.Add(feature);
+                    existingIds.Add(newId);
+                }
+            }
         }
     }
 }
