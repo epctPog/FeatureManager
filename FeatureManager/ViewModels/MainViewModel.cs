@@ -9,6 +9,7 @@ using FeatureManager.Importer.ExcelImporter;
 using FeatureManager.Importer;
 using FeatureManager.Importer.JsonImporter;
 using FeatureManager.Importer.TxtImporter;
+using System.Windows;
 
 namespace FeatureManager.ViewModels
 {
@@ -57,23 +58,34 @@ namespace FeatureManager.ViewModels
         {
             Features.Clear();
             AllFeatures.Clear();
+
             string fullPath = Path.Combine(folderPath, fileName);
             if (!File.Exists(fullPath)) return;
 
-            string json = File.ReadAllText(fullPath);
-            var entries = JsonConvert.DeserializeObject<List<FeatureEntry>>(json);
-            if (entries == null) return;
-
-            foreach (var entry in entries.OrderBy(e => e.Id))
+            try
             {
-                Features.Add(entry);
-                AllFeatures.Add(entry);
-            }
+                var importer = new JsonFeatureImporter();
+                var entries = importer.Import(fullPath);
 
-            UndoManager.Clear();
-            UndoManager.SaveState(Features);
-            RaiseCommandStates();
+                if (entries != null && entries.Count > 0)
+                {
+                    foreach (var entry in entries.OrderBy(e => e.Id))
+                    {
+                        Features.Add(entry);
+                        AllFeatures.Add(entry);
+                    }
+
+                    UndoManager.Clear();
+                    UndoManager.SaveState(Features);
+                    RaiseCommandStates();
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Fehler beim Laden der JSON-Datei:\n" + ex.Message, "Ladefehler", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
+
 
         public void SaveToJson(string path)
         {
@@ -155,25 +167,79 @@ namespace FeatureManager.ViewModels
             var json = JsonConvert.SerializeObject(Features, Formatting.Indented);
             File.WriteAllText(path, json);
         }
-        public void ImportFeatures(string path)
+        public void ImportFile(string sourcePath, string currentFolder)
         {
-            if (!File.Exists(path))
+            if (string.IsNullOrEmpty(sourcePath) || string.IsNullOrEmpty(currentFolder))
                 return;
 
-            string json = File.ReadAllText(path);
-            var importedFeatures = JsonConvert.DeserializeObject<ObservableCollection<FeatureEntry>>(json);
-
-            if (importedFeatures == null)
+            if (!File.Exists(sourcePath))
+            {
+                System.Windows.MessageBox.Show("Die ausgewählte Datei existiert nicht!", "Fehler", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
+            }
 
-            Features.Clear();
-            foreach (var f in importedFeatures)
-                Features.Add(f);
-            UndoManager.Clear();
-            UndoManager.SaveState(Features);
+            string fileName = Path.GetFileName(sourcePath);
+            string destinationPath = Path.Combine(currentFolder, fileName);
 
-            RaiseCommandStates();
+            if (!string.Equals(sourcePath, destinationPath, StringComparison.OrdinalIgnoreCase))
+            {
+                try
+                {
+                    File.Copy(sourcePath, destinationPath, overwrite: false);
+                }
+                catch (IOException)
+                {
+                    System.Windows.MessageBox.Show("Eine Datei mit diesem Namen existiert bereits im Zielordner!", "Fehler", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+                catch (Exception ex)
+                {
+                    System.Windows.MessageBox.Show("Fehler beim Kopieren der Datei:\n" + ex.Message, "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(SelectedJsonFilePath))
+            {
+                string oldFullPath = Path.Combine(currentFolder, SelectedJsonFilePath);
+                SaveToJson(oldFullPath);
+            }
+
+            SelectedJsonFilePath = fileName;
+
+            if (!JsonFiles.Contains(fileName))
+            {
+                JsonFiles.Add(fileName);
+            }
+
+            try
+            {
+                string json = File.ReadAllText(destinationPath);
+                var importer = new JsonFeatureImporter();
+                var importedFeatures = importer.Import(json);
+
+                Features.Clear();
+                AllFeatures.Clear();
+
+                if (importedFeatures != null)
+                {
+                    foreach (var f in importedFeatures)
+                    {
+                        Features.Add(f);
+                        AllFeatures.Add(f);
+                    }
+                }
+
+                UndoManager.Clear();
+                UndoManager.SaveState(Features);
+                RaiseCommandStates();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Fehler beim Einlesen der Datei:\n{ex.Message}", "Fehler");
+            }
         }
+
         public void ImportFeatures(string filePath, string extension)
         {
             IFeatureImporter importer = extension.ToLower() switch

@@ -127,7 +127,7 @@ namespace FeatureManager
 
             if (dlg.ShowDialog() == true)
             {
-                viewModel.ImportFeatures(dlg.FileName);
+                viewModel.ImportFile(dlg.FileName, currentFolder);
             }
         }
 
